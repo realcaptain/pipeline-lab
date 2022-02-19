@@ -2,36 +2,16 @@ pipeline {
   agent any
   stages {
     stage('Fluffy Build') {
-      parallel {
-        stage('Fluffy Build') {
-          steps {
-            sh './jenkins/build.sh'
-          }
-        }
-
-        stage('') {
-          steps {
-            archiveArtifacts 'target/*.jar'
-          }
-        }
-
+      steps {
+        sh './jenkins/build.sh'
+        archiveArtifacts 'target/*.jar'
       }
     }
 
     stage('Fluffy Test') {
-      parallel {
-        stage('Fluffy Test') {
-          steps {
-            sh './jenkins/test-all.sh'
-          }
-        }
-
-        stage('') {
-          steps {
-            junit 'target/**/TEST*.xml'
-          }
-        }
-
+      steps {
+        sh './jenkins/test-all.sh'
+        junit 'target/**/TEST*.xml'
       }
     }
 
